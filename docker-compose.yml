@@ -1,0 +1,17 @@
+# TestApp docker-compose settings
+db:
+  image: postgres
+web:
+  build: .
+  dockerfile: django_dockerfile
+  user: app
+  command: ./manage.py runserver_plus 0.0.0.0:8000
+  volumes:
+    - .:/app
+  ports:
+    - "8005:8000"
+    - "5555:5555"
+  links:
+    - db
+
+# vim: expandtab ts=2 sw=2
