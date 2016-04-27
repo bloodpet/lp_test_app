@@ -28,6 +28,12 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+LOCAL_APPS = (
+)
+
+THIRD_PARTY_APPS = (
+    'rest_framework',
+)
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -36,7 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-)
+) + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,3 +87,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+try:
+    from local_settings import *
+except:
+    pass
