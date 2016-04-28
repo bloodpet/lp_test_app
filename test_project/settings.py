@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 LOCAL_APPS = (
+    'unsubscribe',
 )
 
 THIRD_PARTY_APPS = (
