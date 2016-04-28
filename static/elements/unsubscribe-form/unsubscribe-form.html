@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="unsubscribe-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span,
+      input {
+        @apply(--paper-font-body2);
+      }
+      paper-material {
+        display: block;
+        background: white;
+        box-sizing: border-box;
+        margin: 8px;
+        padding: 16px;
+        border-radius: 2px;
+      }
+    </style>
+
+    <iron-ajax id="confirmUnsubscribe"
+      handleAs="json"
+      content-type="application/json"
+      on-response="handleConfirmResponse"
+      url="{{confirmUrl}}"
+      body="{{confirmBody}}" method="PUT"></iron-ajax>
+    <paper-button raised on-tap="confirmUnsubscribe">Confirm</paper-button>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'unsubscribe-form',
+
+        properties: {
+          email: { type: String, notify: true },
+          confirmed: { type: Boolean, value: false, notify: true },
+          url: { type: String, notify: true },
+          confirmUrl: { type: String, notify: true },
+          confirmBody: { type: String }
+        },
+
+        confirmUnsubscribe: function (e) {
+          this.confirmBody = {email: this.email};
+          this.$.confirmUnsubscribe.generateRequest();
+        },
+        handleConfirmResponse: function (e, detail) {
+          app.$.confirmToast.show();
+          app.$.surveyForm.show();
+          app.$.confirmForm.hide();
+        },
+      });
+    })();
+  </script>
+</dom-module>
