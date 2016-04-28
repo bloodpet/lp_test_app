@@ -73,7 +73,13 @@
       <!-- Main Content -->
       <div class="content">
           <paper-material elevation="1">
-            <unsubscribe-form email="{{ object.email }}" confirm-url="{{ object.get_absolute_url }}"></unsubscribe-form>
+            <h2 class="page-title">Unsubscribe</h2>
+            <iron-collapse id="confirmForm" opened>
+              <unsubscribe-form email="{{ object.email }}" confirm-url="{{ object.get_absolute_url }}"></unsubscribe-form>
+            </iron-collapse>
+            <iron-collapse id="surveyForm">
+              <unsubscribe-survey email="{{ object.email }}" survey-url="{% url 'unsubscribe:survey-list' %}" reason-url="{% url 'unsubscribe:reason' %}"></unsubscribe-survey>
+            </iron-collapse>
           </paper-material>
 
       </div>

@@ -52,3 +52,16 @@ class UnsubscribeUrlViewTestCase(APISimpleTestCase):
         self.assertEqual(200, response.status_code)
         response = self.client.put(url, data={'email': 'fake email'})
         self.assertEqual(400, response.status_code)
+
+
+class UnsubscribeSurveyViewTestCase(APISimpleTestCase):
+
+    def setUp(self):
+        self.url = reverse_lazy('unsubscribe:survey-list')
+
+    def test_create_view(self):
+        response = self.client.post(self.url, data={
+            'reason': REASON_CHOICES[0][0],
+            'email': 'test@survey.com',
+        })
+        self.assertEqual(201, response.status_code)

@@ -1,0 +1,92 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="unsubscribe-survey">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span,
+      input {
+        @apply(--paper-font-body2);
+      }
+      paper-material {
+        display: block;
+        background: white;
+        box-sizing: border-box;
+        margin: 8px;
+        padding: 16px;
+        border-radius: 2px;
+      }
+    </style>
+
+    <iron-ajax id="surveyReasons" auto
+      url="{{reasonUrl}}"
+      last-response={{reasons}}></iron-ajax>
+    <iron-ajax id="surveyAjax"
+      handleAs="json"
+      content-type="application/json"
+      on-response="handleResponse"
+      url="{{surveyUrl}}"
+      body="{{surveyBody}}" method="POST"></iron-ajax>
+
+      <paper-material elavation="2">
+        <p>If you have a moment, please let us know why you unsubscribed</p>
+        <paper-menu>
+          <template is="dom-repeat" items="[[reasons]]" as="item">
+            <paper-item name="[[ item.value ]]" on-tap="selectItem">[[ item.label ]]</paper-item>
+          </template>
+        </paper-menu>
+        <iron-collapse id="otherBox">
+          <paper-input label="Please elaborate" value="{{other_reason}}"></paper-input>
+        </iron-collapse>
+        <paper-button id="submitButton" on-tap="submitSurvey"
+          raised>Submit</paper-button>
+      </paper-material>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'unsubscribe-survey',
+
+        properties: {
+          email: { type: String, notify: true },
+          reasons: { type: [], notify: true },
+          reason: { type: String, notify: true },
+          confirmed: { type: Boolean, value: false, notify: true },
+          url: { type: String, notify: true },
+          reasonUrl: { type: String, notify: true },
+          surveyUrl: { type: String, notify: true },
+          surveyBody: { type: String }
+        },
+
+        selectItem: function(e, instance) {
+          this.reason = instance.sourceEvent.target.name;
+          if (this.reason == 'OTHER') this.askOther();
+        },
+        askOther: function() {
+          console.log('Other selected');
+          this.$.otherBox.show();
+        },
+
+        submitSurvey: function (e) {
+          this.surveyBody = {
+            reason: this.reason,
+            other_reason: this.other_reason,
+            email: this.email};
+          console.log(this.surveyBody);
+          this.$.surveyAjax.generateRequest();
+        },
+        handleResponse: function (e, detail) {
+          app.$.feedbackToast.show();
+          app.$.surveyForm.hide();
+        },
+      });
+    })();
+  </script>
+</dom-module>
