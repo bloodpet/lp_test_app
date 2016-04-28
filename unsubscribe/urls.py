@@ -8,7 +8,7 @@ from unsubscribe.views import *
 
 router = routers.DefaultRouter()
 router.register(r'unsubscribe', UnsubscribeUrlView, base_name='url')
-router.register(r'unsubscribe', UnsubscribeSurveyView, base_name='survey')
+router.register(r'survey', UnsubscribeSurveyView, base_name='survey')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

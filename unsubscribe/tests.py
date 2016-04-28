@@ -65,3 +65,4 @@ class UnsubscribeSurveyViewTestCase(APISimpleTestCase):
             'email': 'test@survey.com',
         })
         self.assertEqual(201, response.status_code)
+        self.assertEqual(1, UnsubscribeSurvey.objects.all().count())

@@ -49,7 +49,6 @@
 
         confirmUnsubscribe: function (e) {
           this.confirmBody = {email: this.email};
-          console.log('confirm', this.confirmUrl, this.email);
           this.$.confirmUnsubscribe.generateRequest();
         },
         handleConfirmResponse: function (e, detail) {

@@ -37,7 +37,7 @@ class UnsubscribeSurvey(models.Model):
     email = models.EmailField(max_length=255)
     reason = models.CharField(max_length=32, choices=REASON_CHOICES)
     is_other = models.BooleanField(default=False)
-    other_reason = models.TextField()
+    other_reason = models.TextField(blank=True)
 
 
 class UnsubscribeSurveyCount(models.Model):

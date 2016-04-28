@@ -40,6 +40,7 @@ class UnsubscribeUrlView(CreateModelMixin, DestroyModelMixin, UpdateModelMixin, 
 
 class UnsubscribeSurveyView(CreateModelMixin, GenericViewSet):
     queryset = UnsubscribeSurvey.objects.all()
+    serializer_class = UnsubscribeSurveySerializer
 
 
 @api_view(http_method_names=['GET'])

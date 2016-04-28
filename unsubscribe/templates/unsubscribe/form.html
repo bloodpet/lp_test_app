@@ -52,8 +52,6 @@
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <!-- Main Area -->
-    <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
       <!-- Main Toolbar -->
       <paper-toolbar id="mainToolbar" class="tall">
         <paper-icon-button id="paperHome" icon="home" href="/"></paper-icon-button>
@@ -83,7 +81,6 @@
           </paper-material>
 
       </div>
-    </paper-scroll-header-panel>
 
     <paper-toast id="confirmToast">
       <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.confirmToast.hide()">Unsubscribe Successful</span>

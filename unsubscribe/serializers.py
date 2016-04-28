@@ -15,3 +15,8 @@ class UnsubscribeUrlSerializer(serializers.ModelSerializer):
             'id': obj.id,
             'form_url': obj.form_url,
         }
+
+
+class UnsubscribeSurveySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnsubscribeSurvey
