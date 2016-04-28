@@ -1,5 +1,6 @@
 import uuid
 
+from django.core import exceptions
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,8 +12,8 @@ class UUIDField(models.CharField):
 
     def prepare_value(self, value):
         if isinstance(value, uuid.UUID):
-            return value.hex
-        return value
+            return str(value)
+        return str(value)
 
     def to_python(self, value):
         value = super(UUIDField, self).to_python(value)
@@ -22,5 +23,5 @@ class UUIDField(models.CharField):
             try:
                 value = uuid.UUID(value)
             except ValueError:
-                raise ValidationError(self.error_messages['invalid'], code='invalid')
-        return value
+                raise exceptions.ValidationError(self.error_messages['invalid'], code='invalid')
+        return value.hex
