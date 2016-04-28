@@ -16,7 +16,10 @@ class UnsubscribeUrl(models.Model):
 
     @property
     def form_url(self):
-        return reverse_lazy('unsubscribe:form', kwargs={'pk': self.id.hex})
+        return reverse_lazy('unsubscribe:form', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse_lazy('unsubscribe:url-detail', args=(self.id,))
 
 
 def generate_url(email):
