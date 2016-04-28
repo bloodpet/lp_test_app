@@ -7,10 +7,16 @@ ADD . /app
 WORKDIR /app
 
 RUN useradd -u 1000 app
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
 
 RUN chown -R app /app
 RUN mkdir -p /home/app
 RUN chown -R app /home/app
 
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+RUN apt-get update -y
+RUN apt-get install -y libncurses5 ncurses-bin libreadline6 readline-common
+RUN apt-get install -y libncurses5-dev build-essential python-dev
+RUN pip install readline

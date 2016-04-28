@@ -1,0 +1,81 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="unsubscribe-url">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span,
+      input {
+        @apply(--paper-font-body2);
+      }
+      paper-material {
+        display: block;
+        background: white;
+        box-sizing: border-box;
+        margin: 8px;
+        padding: 16px;
+        border-radius: 2px;
+      }
+    </style>
+
+    <h2 class="page-title">Unsubscribe URL</h2>
+    <gold-email-input required auto-validate
+      error-message="Required!" label="Email"
+      on-keypress="_keyPressed"
+      value="{{ email }}">
+    </gold-email-input>
+    <paper-button suffix raised on-tap="generateUrl">Generate</paper-button>
+    <iron-ajax id="unsubscribe-api" auto
+      handleAs="json"
+      content-type="application/json"
+      on-response="handleResponse"
+      url="{{ajaxUrl}}"
+      body="{{ajaxBody}}" method="POST"></iron-ajax>
+
+    <iron-collapse id="urlDisplay">
+      <paper-material elavation="2">
+        <a href="{{url}}">{{url}}</a>
+      </paper-material>
+    </iron-collapse>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'unsubscribe-url',
+
+        properties: {
+          email: {
+            type: String,
+            value: 'a@a.com',
+            notify: true
+          },
+          url: { type: String, notify: true },
+          ajaxUrl: { type: String },
+          ajaxBody: { type: String }
+        },
+
+        _keyPressed: function(e) {
+            if (13 === e.charCode && false === this.off) {
+                this.generateUrl(e);
+            }
+        },
+        generateUrl: function (e) {
+          const apiUrl="/unsubscribe/unsubscribe/";
+          this.ajaxUrl = apiUrl;
+          this.ajaxBody = {email: this.email};
+        },
+        handleResponse: function (e, detail) {
+          this.url = window.location.origin + detail.xhr.response.form_url;
+          this.$.urlDisplay.show();
+        },
+      });
+    })();
+  </script>
+</dom-module>
