@@ -18,8 +18,3 @@ class UnsubscribeFormView(TemplateView):
 class UnsubscribeUrlView(CreateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = UnsubscribeUrl.objects.all()
     serializer_class = UnsubscribeUrlSerializer
-
-    def create0(self, *args):
-        ret = super(UnsubscribeUrlView, self).create(*args)
-        print ret
-        return ret
