@@ -22,7 +22,6 @@
       }
     </style>
 
-    <h2 class="page-title">Unsubscribe</h2>
     <iron-ajax id="confirmUnsubscribe"
       handleAs="json"
       content-type="application/json"
@@ -31,11 +30,6 @@
       body="{{confirmBody}}" method="PUT"></iron-ajax>
     <paper-button raised on-tap="confirmUnsubscribe">Confirm</paper-button>
 
-    <iron-collapse id="survey">
-      <paper-material elavation="2">
-        <p>If you have a moment, please let us know why you unsubscribed</p>
-      </paper-material>
-    </iron-collapse>
   </template>
 
   <script>
@@ -60,7 +54,8 @@
         },
         handleConfirmResponse: function (e, detail) {
           app.$.confirmToast.show();
-          this.$.survey.show();
+          app.$.surveyForm.show();
+          app.$.confirmForm.hide();
         },
       });
     })();
