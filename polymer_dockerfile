@@ -1,0 +1,16 @@
+# breadr django dockerfile
+FROM hankhendrix/polymer-starter-kit:1.3.0
+
+RUN mkdir /app
+WORKDIR /app
+
+RUN useradd -u 1000 app
+
+RUN mkdir -p /home/app
+RUN chown -R app /app /home/app /src
+
+ADD . /app
+#RUN npm install
+RUN npm install -g --save yo
+RUN npm install -g --save generator-polymer
+WORKDIR /src

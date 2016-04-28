@@ -9,9 +9,33 @@ web:
   volumes:
     - .:/app
   ports:
-    - "8005:8000"
+    - "8006:8000"
     - "5555:5555"
   links:
     - db
+
+test:
+  build: .
+  dockerfile: django_dockerfile
+  user: app
+  command: ./manage.py test
+  volumes:
+    - .:/app
+  ports:
+    - "8007:8000"
+  links:
+    - db
+
+polymer:
+  build: .
+  dockerfile: polymer_dockerfile
+  user: app
+  volumes:
+    - .:/src
+
+psk:
+  image: hankhendrix/polymer-starter-kit:1.3.0
+  volumes:
+    - .:/app
 
 # vim: expandtab ts=2 sw=2
